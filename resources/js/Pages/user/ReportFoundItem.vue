@@ -1,13 +1,14 @@
+<script setup>
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+</script>
 <template lang="">
+    <AuthenticatedLayout >
     <div>
         Report found item
     </div>
-</template>
-<script>
-export default {
+    </AuthenticatedLayout>
     
-}
-</script>
+</template>
 <style lang="">
     
 </style>
