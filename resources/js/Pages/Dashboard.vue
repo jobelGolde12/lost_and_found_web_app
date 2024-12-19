@@ -2,12 +2,27 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/vue3";
+import { defineProps, onMounted, ref } from "vue";
+import CategoriesList from "@/Components/user/CategoriesList.vue";
+import ItemCard from "@/Components/ItemCard.vue";
+const props = defineProps({
+  categories: {
+    type: Object,
+    default: ({})
+  }
+})
+const categoriesContainer = ref([]);
+
+onMounted(() => {
+  categoriesContainer.value = props.categories;
+})
 </script>
 <template>
   <Head title="Dashboard" />
 
   <AuthenticatedLayout>
-    <div class="container mt-5">
+    <div class="container-fluid mt-4 d-flex flex-row justify-content-between align-items-center">
+      <div class="logo">Lost And Found</div>
       <!-- Search Bar -->
       <div class="search-bar input-group mb-3">
         <input
@@ -15,13 +30,22 @@ import { Head } from "@inertiajs/vue3";
           class="form-control"
           placeholder="Search..."
           aria-label="Search"
+          list="categories"
         />
+
+        <datalist id="categories">
+          <option :value="data.name" v-for="data in props.categoriesContainer" :key="data.id"></option>
+        </datalist>
         <button class="btn btn-outline-secondary" type="button">
           <i class="bi bi-search"></i>
         </button>
       </div>
     </div>
-    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit qui repellat cumque impedit nisi neque laudantium nostrum sequi, illum omnis possimus doloremque atque optio quibusdam dignissimos asperiores tempora tempore saepe iure a! Obcaecati laborum repudiandae ipsum iure, sequi praesentium atque labore veritatis exercitationem et cumque ipsa autem dolore minima expedita.
+
+    <!-- List of all categories  -->
+    <CategoriesList :categories="categoriesContainer"/>
+    <!-- List of all items  -->
+    <ItemCard />
   </AuthenticatedLayout>
 </template>
 
@@ -42,6 +66,10 @@ import { Head } from "@inertiajs/vue3";
   width: 80%;
   height: 100%;
   overflow-y: scroll;
+}
+.search-bar{
+  position: relative;
+  width: 30%;
 }
 @media screen and (max-width: 1024px) {
   .main-container .right {

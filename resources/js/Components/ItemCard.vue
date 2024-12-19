@@ -1,21 +1,32 @@
 <template>
-    <div class="card mx-auto my-4" style="max-width: 400px; border: 2px solid #000; padding: 15px; background-color: #f5f5f5;">
+    <div class="card mx-auto my-4">
       <div class="text-center">
         <h1 class="text-danger fw-bold" style="font-family: 'Courier New', monospace;">MISSING</h1>
       </div>
       <div class="text-center mt-3">
         <img
-          src="https://via.placeholder.com/300" <!-- Replace with actual image URL -->
+          src="../../images/missing-bike.jpg"
           alt="Missing pet"
-          class="img-fluid rounded"
-          style="max-height: 300px;"
+          class="img-fluid rounded card-img"
         />
       </div>
-      <div class="text-center mt-3">
-        <h3 class="fw-bold" style="font-family: 'Courier New', monospace;">mingming</h3>
-        <p class="text-muted">Last seen at 12th Street of Goulerst Village</p>
-        <p class="text-danger fw-bold">Call <a href="tel:1234567890" class="text-decoration-none text-danger">123-456-7890</a></p>
-        <p class="text-muted">for any leads. Thank you!</p>
+      <div class="text-start mt-3">
+        <h3 class="fw-bold mb-0" style="font-family: 'Courier New', monospace;">My bike</h3>
+        <p class="text-muted">Pink na bag na may apat na rida</p>
+        
+        <div class=" container-fluid px-0 d-flex flex-row gap-2 justify-content-center align-items-center">
+          <div class="d-flex flex-row gap-2 w-50">
+             <div class="bi bi-telephone fs-5"></div>
+             <div class="bi bi-facebook fs-5 "></div>
+          </div>
+
+          <div class="w-50 d-flex justify-content-end">
+            <div class="bi bi-eye fs-5"></div>
+          </div>
+
+
+          <!-- <a href="tel:1234567890" class="text-decoration-none text-danger">123-456-7890</a> -->
+        </div>
       </div>
     </div>
   </template>
@@ -28,8 +39,15 @@
   
   <style scoped>
   .card {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
+    max-width: 350px; 
+    padding: 15px; 
+    background-color: #f5f5f5;
+  }
+  .card .card-img{
+    max-height: 150px;
+    max-width: auto;
   }
   </style>
   
