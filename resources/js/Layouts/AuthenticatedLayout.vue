@@ -1,11 +1,12 @@
 <script setup>
-import { usePage } from "@inertiajs/inertia-vue3";
+import { usePage } from "@inertiajs/vue3";
 import { Link } from "@inertiajs/vue3";
 import { ref, onMounted } from "vue";
 
 const currentRoute = usePage().url;
 
 
+const user = usePage().props.auth?.user;
 const isSidebarOpen = ref(localStorage.getItem('isSidebarOpen') === 'true');
 
 const toggleSidebar = () => {
@@ -33,7 +34,7 @@ onMounted(() => {
           :href="route('profile.edit')"
           class="pointer user-name text-dark text-decoration-none"
         >
-          Boggart
+          {{ user.name }}
         </Link>
         <div
           class="bi bi-list pointer text-dark fw-bolder fs-3"
@@ -74,7 +75,7 @@ onMounted(() => {
     </div>
 
     <!-- Page Content -->
-    <main :style="{ width: isSidebarOpen ? '80%' : '95%' }">
+    <main :style="{ width: isSidebarOpen ? '80%' : '95%' }" class="right">
       <slot />
     </main>
   </div>
@@ -90,16 +91,22 @@ onMounted(() => {
   overflow-x: hidden;
 }
 
-.sidebar {
-  position: fixed;
+.main-container .sidebar {
+  position: relative;
   top: 0;
   height: 100vh;
   background-color: #f8f9fa;
   padding: 20px;
   transition: width 0.3s ease;
   overflow: hidden;
+  width: 20%;
 }
 
+.main-container .right{
+  position: relative;
+  width: 80%;
+  height: 100%;
+}
 .sidebar.closed {
   width: 5%;
   display: flex;

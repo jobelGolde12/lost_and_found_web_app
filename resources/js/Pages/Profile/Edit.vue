@@ -18,6 +18,7 @@ defineProps({
 <template>
     <Head title="Profile" />
 
+   <div class="profile-edit">
     <AuthenticatedLayout>
         <template #header>
             <h2
@@ -53,4 +54,13 @@ defineProps({
             </div>
         </div>
     </AuthenticatedLayout>
+   </div>
 </template>
+
+<style scoped>
+.profile-edit{
+    position: absolute;
+    width: 80%;
+    height: 100%;
+}
+</style>
