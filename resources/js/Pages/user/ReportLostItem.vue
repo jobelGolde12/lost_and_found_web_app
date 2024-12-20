@@ -1,23 +1,32 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import { useForm } from '@inertiajs/inertia-vue3';
+import { usePage } from '@inertiajs/vue3';
 import { defineProps, onMounted, ref } from 'vue';
-import { useForm } from '@inertiajs/vue3';
 const props = defineProps({
     categories: {
         type: Object,
         default: ({})
     }
 });
+const user = usePage().props.auth?.user;
+console.log('user id => ' + user.id)
 const getCategories = ref([]);
 const form = useForm({
     name: '',
     image: null,
     description: '',
     category: '',
-    location: ''
+    location: '',
+    user_id: user.id,
+    owner_phone_number: '',
 })
 const submitForm = () => {
-    form.post(route('addLostItem'));
+    console.log('form: ' + JSON.stringify(form))
+    form.post(route('addLostItem'),  {
+        onSuccess: () => alert('Submitted!'),
+        onError: (errors) => console.log('error: ' + errors)
+    });
 }
 const locations = ref([
     'Aguinaldo',
@@ -78,7 +87,7 @@ const handleFileChange = (event) => {
         <h1 class="text-dark fw-light text-center fs-3 mt-3">Report Lost Item</h1>
 
         <div class="container px-4">
-            <form @submit.prevent="submitForm" class="form mt-4">
+            <form @submit.prevent="submitForm" class="form mt-5">
                 <div class="row">
                     <div class="col-12 col-lg-6">
                         <label class="text-muted d-block">Item name</label>
@@ -102,7 +111,7 @@ const handleFileChange = (event) => {
 
                 <div class="row">
                     <div class="col-12 col-lg-6">
-                        <label class="text-muted d-block">Item image</label>
+                        <label class="text-muted d-block">Item image (optional)</label>
                         <input type="file" accept="image/*" class="w-100 image"  @change="handleFileChange">
                     </div>
                     <div class="col-12 col-lg-6">
@@ -119,9 +128,11 @@ const handleFileChange = (event) => {
                         </select>
                     </div>
                     <div class="col-12 col-lg-6 d-flex align-items-center pt-4">
-                        <button class="btn btn-dark" type="submit">Submit</button>
+                        <label class="text-muted d-block">Owner phone number (optional)</label>
+                        <input type="text" placeholder="ex: 09461284345" class="w-100 d-block" v-model="form.owner_phone_number">
                     </div>
                 </div>
+                <button class="btn btn-dark" type="submit">Submit</button>
             </form>
         </div>
     </div>

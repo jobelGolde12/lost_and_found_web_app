@@ -162,4 +162,9 @@ onMounted(() => {
 .sidebar .list a:hover {
   background: rgba(0, 0, 0, 0.1);
 }
+@media screen and (max-width: 800px) {
+  .main-container .sidebar{
+    display: none;
+  }
+}
 </style>

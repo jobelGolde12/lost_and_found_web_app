@@ -9,20 +9,27 @@ const props = defineProps({
   categories: {
     type: Object,
     default: ({})
+  },
+  items: {
+    type: Object,
+    default: ({})
   }
 })
 const categoriesContainer = ref([]);
+const getItems = ref([]);
 
 onMounted(() => {
   categoriesContainer.value = props.categories;
+  getItems.value = props.items;
 })
+console.log("Items from dashboard => " + JSON.stringify(getItems.value))
 </script>
 <template>
   <Head title="Dashboard" />
 
   <AuthenticatedLayout>
     <div class="container-fluid mt-4 d-flex flex-row justify-content-between align-items-center">
-      <div class="logo">Lost And Found</div>
+      <div class="logo d-none d-sm-block d-lg-block">Lost And Found</div>
       <!-- Search Bar -->
       <div class="search-bar input-group mb-3">
         <input
@@ -46,7 +53,7 @@ onMounted(() => {
     <!-- List of all categories  -->
     <CategoriesList :categories="categoriesContainer"/>
     <!-- List of all items  -->
-    <ItemCard />
+    <ItemCard :items="getItems"/>
   </AuthenticatedLayout>
 </template>
 
@@ -89,6 +96,16 @@ onMounted(() => {
     height: 100vh;
     top: 0;
     left: 0;
+  }
+}
+@media screen and (max-width: 800px) {
+  .search-bar {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
   }
 }
 </style>
