@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
@@ -28,4 +29,7 @@ Route::middleware('auth')->group(function () {
 // user 
 Route::get('/report-lost-item', [UserController::class, 'reportLostItem'])->name('reportLostItem');
 Route::get('/report-found-item', [UserController::class, 'reportFoundItem'])->name('reportFoundItem');
+
+
+Route::post('/add-lost-item', [ItemController::class, 'store'])->name('addLostItem');
 require __DIR__.'/auth.php';

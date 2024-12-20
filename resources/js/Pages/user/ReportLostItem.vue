@@ -9,18 +9,68 @@ const props = defineProps({
     }
 });
 const getCategories = ref([]);
-const submitForm = useForm({
+const form = useForm({
     name: '',
-    url: '',
+    image: null,
     description: '',
     category: '',
     location: ''
 })
+const submitForm = () => {
+    form.post(route('addLostItem'));
+}
+const locations = ref([
+    'Aguinaldo',
+    'Aquino',
+    'Bacalod',
+    'Barangay Central (Poblacion)',
+    'Barangay Zone I (Poblacion)',
+    'Barangay Zone II (Poblacion)',
+    'Barangay Zone III (Poblacion)',
+    'Beguin',
+    'Binanuahan',
+    'Bonga',
+    'Buenavista',
+    'Cadandanan',
+    'Calpi',
+    'Dolores',
+    'Fabrica',
+    'Gate',
+    'Gimaloto',
+    'J.P. Laurel',
+    'Lajong',
+    'Lapinig',
+    'Libertad',
+    'Managanaga',
+    'Obrero',
+    'Osmeña',
+    'Otavi',
+    'Palale',
+    'Porog',
+    'Quezon',
+    'Recto',
+    'Rizal',
+    'San Francisco',
+    'San Isidro',
+    'San Juan Bag-o',
+    'San Rafael',
+    'San Ramon',
+    'Santa Remedios',
+    'Siembre',
+    'Somagongsong',
+    'Taboc',
+    'Tinampo',
+    'Zone IV (Poblacion)',
+]);
+
 onMounted(() => {
     getCategories.value = props.categories;
 })
 
-
+const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    form.image = file;
+};
 </script>
 <template>
     <AuthenticatedLayout >
@@ -32,30 +82,40 @@ onMounted(() => {
                 <div class="row">
                     <div class="col-12 col-lg-6">
                         <label class="text-muted d-block">Item name</label>
-                        <input type="text" placeholder="ex: Cholo" class="w-100" v-model="submitForm.name">
+                        <input type="text" placeholder="ex: Cholo" class="w-100" v-model="form.name">
                     </div>
                     <div class="col-12 col-lg-6">
                         <label class="text-muted d-block">Location</label>
-                        <input type="text" placeholder="your location" class="w-100" v-model="submitForm.location">
+                        <select 
+                                class="w-100" 
+                                v-model="form.location">
+                                <option disabled value="">Select a location</option>
+                                <option 
+                                    v-for="loc in locations" 
+                                    :key="loc" 
+                                    :value="loc">
+                                    {{ loc }}
+                                </option>
+                            </select>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-12 col-lg-6">
                         <label class="text-muted d-block">Item image</label>
-                        <input type="file" accept="image/*" class="w-100 image" >
+                        <input type="file" accept="image/*" class="w-100 image"  @change="handleFileChange">
                     </div>
                     <div class="col-12 col-lg-6">
                         <label class="text-muted d-block">Item description</label>
-                        <textarea type="text" class="w-100" placeholder="ex: brown and tall, Last seen on zone 3 Bulan." v-model="submitForm.description"> </textarea>
+                        <textarea type="text" class="w-100" placeholder="ex: brown and tall, Last seen on zone 3 Bulan." v-model="form.description"> </textarea>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-12 col-lg-6">
                         <label class="text-muted d-block">Category</label>
-                        <select name="categories" id="categories" class="w-100" v-model="submitForm.category">
-                            <option :value="data.name" v-for="data in props.categories" :key="data.id" >{{ data.name }}</option>
+                        <select name="categories" id="categories" class="w-100" v-model="form.category">
+                            <option :value="data.id" v-for="data in props.categories" :key="data.id" >{{ data.name }}</option>
                         </select>
                     </div>
                     <div class="col-12 col-lg-6 d-flex align-items-center pt-4">
