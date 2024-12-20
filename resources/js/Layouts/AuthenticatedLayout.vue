@@ -21,7 +21,7 @@ onMounted(() => {
 <template>
   <div class="main-container d-flex flex-row justify-content-between align-items-center">
     <div
-      class="sidebar"
+      class="sidebar bg-light"
       :class="{ 'closed': !isSidebarOpen }"
       :style="{
         width: isSidebarOpen ? '250px' : '5%',
@@ -95,7 +95,7 @@ onMounted(() => {
   position: relative;
   top: 0;
   height: 100vh;
-  background-color: #f8f9fa;
+  /* background-color: #eeeeee; */
   padding: 20px;
   transition: width 0.3s ease;
   overflow: hidden;

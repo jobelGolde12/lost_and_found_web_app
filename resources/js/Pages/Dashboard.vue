@@ -27,16 +27,17 @@ onMounted(() => {
       <div class="search-bar input-group mb-3">
         <input
           type="text"
-          class="form-control"
+          class=""
           placeholder="Search..."
           aria-label="Search"
           list="categories"
+          style="outline: none;"
         />
 
         <datalist id="categories">
           <option :value="data.name" v-for="data in props.categoriesContainer" :key="data.id"></option>
         </datalist>
-        <button class="btn btn-outline-secondary" type="button">
+        <button class="btn btn-light" type="button">
           <i class="bi bi-search"></i>
         </button>
       </div>
@@ -70,6 +71,16 @@ onMounted(() => {
 .search-bar{
   position: relative;
   width: 30%;
+}
+.search-bar input{
+  position: relative;
+  width: 80%;
+  padding: .5rem 1rem;
+  border: .5px solid rgba(0,0,0,.2);
+  border-radius: 5px 0 0 5px;
+}
+.search-bar input:focus, .search-bar input:hover{
+  outline: 1px solid rgba(0,0,0,.5);
 }
 @media screen and (max-width: 1024px) {
   .main-container .right {
