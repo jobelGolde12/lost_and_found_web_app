@@ -17,7 +17,7 @@ const chooseCategoryFunc = (id) => {
             <div class="list px-2 py-1 rounded"
                 v-for="data in props.categories" :key="data.id"
                 :class="{'bg-secondary text-light' : activeCategory === data.id}"
-                @click="chooseCategoryFunc(data.id)"
+                @click="$emit('categorySelected', data.id)"
                 >
                     {{ data.name }}
             </div>

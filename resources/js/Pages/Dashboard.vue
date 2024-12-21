@@ -1,11 +1,11 @@
-
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import FilterComponent from "@/Components/user/FilterComponent.vue";
 import { Head } from "@inertiajs/vue3";
-import { computed, defineProps, onMounted, ref } from "vue";
+import { computed, defineProps, ref } from "vue";
 import CategoriesList from "@/Components/user/CategoriesList.vue";
 import ItemCard from "@/Components/ItemCard.vue";
+
 const props = defineProps({
   categories: {
     type: Array,
@@ -16,26 +16,40 @@ const props = defineProps({
     default: [],
   },
 });
+
+// Add "All" category to the categories list
 const categoriesContainer = computed(() => {
-  return [{ id: '', name: 'All', status: 'all' }, ...props.categories]; 
+  return [{ id: '', name: 'All', status: 'all' }, ...props.categories];
 });
-const getItems = computed(() => {
-  if (filterStatus.value === 'all') {
-    return props.items;
-  } else if (filterStatus.value === 'lost') {
-    return props.items.filter(item => item.status === 'lost');
-  } else if (filterStatus.value === 'found') {
-    return props.items.filter(item => item.status === 'found');
-  } else {
-    return []; // Handle unexpected filterStatus values
-  }
-});
+
+// Track the selected category and filter status
+const selectedCategory = ref('');
 const filterStatus = ref('all');
-const handleFilterChange = (filter) =>{
-      filterStatus.value = filter;
-      console.log("Filter changed to:", filterStatus);
-    }
+
+// Filter items based on selected category and filter status
+const getItems = computed(() => {
+  return props.items.filter(item => {
+    const matchesCategory =
+      selectedCategory.value === '' || item.category_id === selectedCategory.value;
+    const matchesStatus =
+      filterStatus.value === 'all' || item.status === filterStatus.value;
+    return matchesCategory && matchesStatus;
+  });
+});
+
+// Update filterStatus when the filter changes
+const handleFilterChange = (filter) => {
+  filterStatus.value = filter;
+  console.log("Filter changed to:", filterStatus.value);
+};
+
+// Update selectedCategory when a category is clicked
+const handleCategoryChange = (categoryId) => {
+  selectedCategory.value = categoryId;
+  console.log("Selected category changed to:", selectedCategory.value);
+};
 </script>
+
 <template>
   <Head title="Dashboard" />
 
@@ -69,18 +83,20 @@ const handleFilterChange = (filter) =>{
         </div>
       </div>
 
-     
+      <!-- List of all categories -->
+      <CategoriesList
+        :categories="categoriesContainer"
+        @categorySelected="handleCategoryChange"
+      />
 
-      <!-- List of all categories  -->
-      <CategoriesList :categories="categoriesContainer" />
-      <!-- Filter kung lost o found  -->
+      <!-- Filter kung lost o found -->
       <FilterComponent @filterSelected="handleFilterChange" />
-      <!-- List of all items  -->
+
+      <!-- List of all items -->
       <ItemCard :items="getItems" />
     </div>
   </AuthenticatedLayout>
 </template>
-
 
 <style scoped>
 .main-container {
