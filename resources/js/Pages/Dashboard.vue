@@ -8,20 +8,22 @@ import CategoriesList from "@/Components/user/CategoriesList.vue";
 import ItemCard from "@/Components/ItemCard.vue";
 const props = defineProps({
   categories: {
-    type: Object,
-    default: {},
+    type: Array,
+    default: [],
   },
   items: {
     type: Array,
     default: [],
   },
 });
-const categoriesContainer = computed(() => props.categories);
+const categoriesContainer = computed(() => {
+  return [{ id: '', name: 'All', status: 'all' }, ...props.categories]; 
+});
 const getItems = computed(() => props.items);
-const filterType = ref();
+const filterStatus = ref();
 const handleFilterChange = (filter) =>{
-      filterType.value = filter;
-      console.log("Filter changed to:", filterType);
+      filterStatus.value = filter;
+      console.log("Filter changed to:", filterStatus);
     }
 </script>
 <template>
