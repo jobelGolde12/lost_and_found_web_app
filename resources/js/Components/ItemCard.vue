@@ -11,36 +11,41 @@ const itemContainer = computed(() => props.items);
 </script>   
 
     <template>
-  <div class="container-fluid d-flex flex-row flex-wrap mt-4 gap-3">
-    <div
-      class="card"
-      style="width: 18rem"
-      v-for="data in itemContainer"
-      :key="data.id"
-    >
-      <img
-        :src="data.image_url"
-        class="card-img-top"
-        alt="Item image"
-        v-if="data.image_url"
-      />
-      <div class="card-body">
-        <h5 class="card-title">{{ data.item_name }}</h5>
-        <p class="card-text">{{ data.item_description }}</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
-      </div>
-    </div>
+  <div class="card-container container-fluid d-flex flex-row flex-wrap mt-4 gap-3">
+        <div
+          class="card"
+          style="width: 18rem"
+          v-for="data in itemContainer"
+          :key="data.id"
+        >
+          <img
+            :src="data.image_url"
+            class="card-img-top"
+            alt="Item image"
+            v-if="data.image_url"
+          />
+          <div class="card-body">
+            <h5 class="card-title">{{ data.item_name }}</h5>
+            <p class="card-text">{{ data.item_description }}</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+          </div>
+        </div>
+
+        <div class="container mt-5">
+          <h1 class="text-dark text-center">End Of Items</h1>
+        </div>
   </div>
 </template>
 
-  <script>
-export default {
-  name: "MissingPetCard",
-};
-</script>
-
   
 <style scoped>
+.card-container{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
 .card {
   border-radius: 8px;
   max-width: 350px;
@@ -49,7 +54,7 @@ export default {
 }
 
 .card img {
-  max-height: 150px;
+  max-height: 180px;
   max-width: auto;
 }
 </style>

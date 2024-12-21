@@ -1,16 +1,19 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { useForm } from '@inertiajs/inertia-vue3';
-import { usePage } from '@inertiajs/vue3';
-import { defineProps, onMounted, ref } from 'vue';
+import { usePage, Head } from '@inertiajs/vue3';
+import { computed, defineProps, onMounted, ref } from 'vue';
 const props = defineProps({
     categories: {
         type: Object,
         default: ({})
+    },
+    locations: {
+        type: Array,
+        default: []
     }
 });
 const user = usePage().props.auth?.user;
-console.log('user id => ' + user.id)
 const getCategories = ref([]);
 const form = useForm({
     name: '',
@@ -20,6 +23,7 @@ const form = useForm({
     location: '',
     user_id: user.id,
     owner_phone_number: '',
+    status: 'lost',
 })
 const submitForm = () => {
     console.log('form: ' + JSON.stringify(form))
@@ -28,49 +32,7 @@ const submitForm = () => {
         onError: (errors) => console.log('error: ' + errors)
     });
 }
-const locations = ref([
-    'Aguinaldo',
-    'Aquino',
-    'Bacalod',
-    'Barangay Central (Poblacion)',
-    'Barangay Zone I (Poblacion)',
-    'Barangay Zone II (Poblacion)',
-    'Barangay Zone III (Poblacion)',
-    'Beguin',
-    'Binanuahan',
-    'Bonga',
-    'Buenavista',
-    'Cadandanan',
-    'Calpi',
-    'Dolores',
-    'Fabrica',
-    'Gate',
-    'Gimaloto',
-    'J.P. Laurel',
-    'Lajong',
-    'Lapinig',
-    'Libertad',
-    'Managanaga',
-    'Obrero',
-    'Osmeña',
-    'Otavi',
-    'Palale',
-    'Porog',
-    'Quezon',
-    'Recto',
-    'Rizal',
-    'San Francisco',
-    'San Isidro',
-    'San Juan Bag-o',
-    'San Rafael',
-    'San Ramon',
-    'Santa Remedios',
-    'Siembre',
-    'Somagongsong',
-    'Taboc',
-    'Tinampo',
-    'Zone IV (Poblacion)',
-]);
+const locations = computed(() => props.locations);
 
 onMounted(() => {
     getCategories.value = props.categories;
@@ -82,6 +44,7 @@ const handleFileChange = (event) => {
 };
 </script>
 <template>
+    <Head title="Report Lost Item" />
     <AuthenticatedLayout >
     <div class="main-container">
         <h1 class="text-dark fw-light text-center fs-3 mt-3">Report Lost Item</h1>
@@ -102,8 +65,8 @@ const handleFileChange = (event) => {
                                 <option 
                                     v-for="loc in locations" 
                                     :key="loc" 
-                                    :value="loc">
-                                    {{ loc }}
+                                    :value="loc.name">
+                                    {{ loc.name }}
                                 </option>
                             </select>
                     </div>

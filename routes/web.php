@@ -31,5 +31,5 @@ Route::get('/report-lost-item', [UserController::class, 'reportLostItem'])->name
 Route::get('/report-found-item', [UserController::class, 'reportFoundItem'])->name('reportFoundItem');
 
 
-Route::post('/add-lost-item', [ItemController::class, 'store'])->name('addLostItem');
+Route::post('/add-item', [ItemController::class, 'store'])->name('addItem');
 require __DIR__.'/auth.php';
