@@ -24,10 +24,10 @@ const itemContainer = computed(() => props.items);
             alt="Item image"
             v-if="data.image_url"
           />
-          <div class="card-body">
-            <h5 class="card-title">{{ data.item_name }}</h5>
-            <p class="card-text">{{ data.item_description }}</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+          <div class="card-body ps-0">
+            <h5 class="card-title mb-0">{{ data.item_name }}</h5>
+            <p class="card-text text-muted">{{ data.item_description }}</p>
+            <a href="#" class="btn btn-light ms-0" v-if="data.owner_phone_number">Call : {{ data.owner_phone_number }}</a>
           </div>
         </div>
 
@@ -51,6 +51,10 @@ const itemContainer = computed(() => props.items);
   max-width: 350px;
   padding: 15px;
   background-color: transparent;
+  cursor: pointer;
+}
+.card:hover{
+  background: rgba(200, 195, 195, 0.1);
 }
 
 .card img {

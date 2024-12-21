@@ -2,6 +2,7 @@
     <div class="container">
       <select name="filter" id="filter" class="form-control mt-2" v-model="selectedFilter" @change="emitFilter">
         <option disabled value="">Filter</option>
+        <option value="all">All</option>
         <option value="lost">Lost</option>
         <option value="found">Found</option>
       </select>
@@ -27,6 +28,7 @@
   <style scoped>
 .container #filter{
    position: relative;
-   width: 15%;
+   width: 10%;
+   border: none;
 } 
   </style>

@@ -19,8 +19,18 @@ const props = defineProps({
 const categoriesContainer = computed(() => {
   return [{ id: '', name: 'All', status: 'all' }, ...props.categories]; 
 });
-const getItems = computed(() => props.items);
-const filterStatus = ref();
+const getItems = computed(() => {
+  if (filterStatus.value === 'all') {
+    return props.items;
+  } else if (filterStatus.value === 'lost') {
+    return props.items.filter(item => item.status === 'lost');
+  } else if (filterStatus.value === 'found') {
+    return props.items.filter(item => item.status === 'found');
+  } else {
+    return []; // Handle unexpected filterStatus values
+  }
+});
+const filterStatus = ref('all');
 const handleFilterChange = (filter) =>{
       filterStatus.value = filter;
       console.log("Filter changed to:", filterStatus);
