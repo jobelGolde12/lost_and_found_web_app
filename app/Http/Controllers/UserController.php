@@ -25,4 +25,7 @@ class UserController extends Controller
             'locations' => $locations
         ]);
     }
+    public function goToSettings(){
+        return Inertia::render('user/Settings');
+    }
 }

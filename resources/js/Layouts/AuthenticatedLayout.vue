@@ -71,6 +71,31 @@ onMounted(() => {
           </div>
           <span v-if="isSidebarOpen">Report Found Item</span>
         </Link>
+
+        <hr>
+        <!-- =========================== -->
+
+        <Link
+          :href="route('profile')"
+          :class="{ active: currentRoute === route('profile') }"
+        >
+          <div :class="{'icon-container' : !isSidebarOpen}">
+            <i class="bi bi-person link"></i>
+          </div>
+          <span v-if="isSidebarOpen">Profile</span>
+        </Link>
+
+        <Link
+          :href="route('settings')"
+          :class="{ active: currentRoute === route('settings') }"
+        >
+          <div :class="{'icon-container' : !isSidebarOpen}">
+            <i class="bi bi-gear link"></i>
+          </div>
+          <span v-if="isSidebarOpen">Settings</span>
+        </Link>
+
+
       </div>
     </div>
 

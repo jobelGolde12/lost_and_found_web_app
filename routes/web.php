@@ -20,6 +20,7 @@ Route::get('/', function () {
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    Route::get('/my-profile', [ProfileController::class, 'index'])->name('profile');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -29,6 +30,7 @@ Route::middleware('auth')->group(function () {
 // user 
 Route::get('/report-lost-item', [UserController::class, 'reportLostItem'])->name('reportLostItem');
 Route::get('/report-found-item', [UserController::class, 'reportFoundItem'])->name('reportFoundItem');
+Route::get('/settings', [UserController::class, 'goToSettings'])->middleware(['auth', 'verified'])->name('settings');
 
 
 Route::post('/add-item', [ItemController::class, 'store'])->name('addItem');

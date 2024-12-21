@@ -28,7 +28,7 @@
   <style scoped>
 .container #filter{
    position: relative;
-   width: 10%;
+   width: 9%;
    border: none;
 } 
   </style>
