@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\ItemModel;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -17,7 +18,10 @@ class ProfileController extends Controller
      * Display the user's profile form.
      */
     public function index(){
-        return Inertia::render('user/Profile');
+        $items = ItemModel::where('user_id', Auth::id())->get();
+        return Inertia::render('user/Profile', [
+            'items' => $items,  
+        ]);
     }
     public function edit(Request $request): Response
     {

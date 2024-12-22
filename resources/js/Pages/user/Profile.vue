@@ -1,12 +1,25 @@
 
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head, usePage } from '@inertiajs/vue3';
+import { Head, usePage, Link } from '@inertiajs/vue3';
+import { computed, defineProps, onMounted, ref } from 'vue';
 const user = usePage().props.auth.user;
+const props = defineProps({
+    items: {
+        type: Object,
+        default: ({})
+    }
+})
+let itemsContainer = ref([]);
+onMounted(() => {
+itemsContainer.value = props.items;
+})
+
 </script>
 <template>
 <Head title="My profile" />
     <AuthenticatedLayout >
+       <div class="main-container1">
         <div class="bg-image container mx-auto bg-secondary mt-3 rounded">
             <div class="profile-pic shadow-sm">
                 <img src="../../../images/missing bag.jpg" alt="Profile pic">
@@ -25,30 +38,42 @@ const user = usePage().props.auth.user;
 
         </div>
 
-        <div class="container">
+        <div class="container mx-4 mt-5">
+            <h3 class="text-muted fw-light mb-5">My Items</h3>
             <table class="table table-responsive">
                 <thead>
                     <th>Name</th>
                     <th>Description</th>
                     <th>Status</th>
-                    <th>Actions</th>
+                    <th>Action</th>
                 </thead>
 
                 <tbody>
-                    <tr>
-                        <td></td>
+                    <tr v-for="item in itemsContainer" :key="item.id">
+                        <td >{{ item.item_name }}</td>
+                        <td>{{ item.item_description }}</td>
+                        <td>{{ item.status }}</td>
+                        <td><Link :href="route('viewItem', { id: item.id })" class="btn btn-primary ms-0">View</Link></td>
                     </tr>
                 </tbody>
             </table>
         </div>
+       </div>
     </AuthenticatedLayout>
 </template>
 
 <style lang="css" scoped>
-    .bg-image, .head-info{
+    .main-container1{
         position: relative;
-        width: 90%;
-        height: 50%;
+        width: 100%;
+        height: 100%;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        padding: 0 2rem;
+    }
+    .bg-image{
+        width: 100%;
+        height: 40%;
     }
     .head-info{
         height: auto;
@@ -58,8 +83,8 @@ const user = usePage().props.auth.user;
         width: 180px;
         height: 180px;
         border-radius: 50%;
-        left: 2%;
-        bottom: -68%;
+        left: 0%;
+        bottom: -55%;
         overflow: hidden;
     }
     .profile-pic img{

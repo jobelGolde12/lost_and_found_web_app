@@ -31,7 +31,7 @@ Route::middleware('auth')->group(function () {
 Route::get('/report-lost-item', [UserController::class, 'reportLostItem'])->name('reportLostItem');
 Route::get('/report-found-item', [UserController::class, 'reportFoundItem'])->name('reportFoundItem');
 Route::get('/settings', [UserController::class, 'goToSettings'])->middleware(['auth', 'verified'])->name('settings');
-
+Route::get('/view-item/{item}', [ItemController::class, 'viewItem'])->name('viewItem');
 
 Route::post('/add-item', [ItemController::class, 'store'])->name('addItem');
 require __DIR__.'/auth.php';

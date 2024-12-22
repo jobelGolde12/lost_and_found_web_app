@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\ItemModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Inertia\Inertia;
 
 class ItemController extends Controller
 {
@@ -39,5 +40,12 @@ class ItemController extends Controller
 
        
         return response()->json(['success' => 'Item successfully created!'], 201);
+    }
+
+    public function viewItem($item){
+        $getItem = ItemModel::find($item);
+        return Inertia::render('user/ViewItem', [
+            'item' => $getItem
+        ]);
     }
 }
