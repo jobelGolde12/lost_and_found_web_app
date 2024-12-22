@@ -1,6 +1,7 @@
 <script setup>
 import { ref, watch } from 'vue';
 import { useForm } from '@inertiajs/vue3';
+import CustomModal from '@/Components/CustomModal.vue';
 const props = defineProps({
   item: {
     type: Object,
@@ -9,6 +10,8 @@ const props = defineProps({
 });
 
 const data = ref({});
+const deleteMessage = ref('Are you sure you want to delete this item?');
+const response = ref();
 
 
 watch(
@@ -20,12 +23,22 @@ watch(
 );
 
 const deleteItem = useForm({
-  id: ''
+  id: data.id
 })
+
+const getResponse = (response) => {
+  if (response === 'yes') {
+    deleteItem.delete(route('deleteItem', { id: deleteItem.id }), {
+      onSuccess: () => alert('deleted'),
+      onError: (errors) => console.log('error => ' + errors),
+    });
+  }
+};
 </script>
 
 <template>
-  <div class="view-item card">
+  <div class="container mx-auto">
+    <div class="view-item card">
     <div v-if="Object.keys(data).length > 0">
       <div class="card-header">
       <img v-if="data.image_url" :src="data.image_url" alt="Item Image" />  
@@ -39,8 +52,19 @@ const deleteItem = useForm({
           <p v-if="data.category"><strong>Category:</strong> {{ data.category.name }}</p>
           <p><strong>Created at:</strong> {{ new Date(data.created_at).toLocaleString() }}</p>
 
-          <div class="container px-0 d-flex flex-row gap-2">
-            <button class="button1">Update</button>
+          <div class="container px-0 d-flex flex-row gap-2 mt-2">
+            <button class="button1">
+              <span class="d-block d-lg-none"><i class="bi bi-pencil"></i></span>
+              <span class="d-none d-lg-inline">Update</span>
+            </button>
+            <button 
+            class="btn btn-warning"
+            data-bs-toggle="modal" 
+            data-bs-target="#customModal"
+            >
+              <span class="d-block d-lg-none"><i class="bi bi-trash"></i></span>
+              <span class="d-none d-lg-inline">Delete</span>
+            </button>
           </div>
       </div>
     </div>
@@ -48,6 +72,10 @@ const deleteItem = useForm({
       <p>Loading item details...</p>
     </div>
   </div>
+  </div>
+
+
+  <CustomModal :name="deleteMessage" :id="data.id" @response="getResponse(data)"/>
 </template>
 
 <style scoped>

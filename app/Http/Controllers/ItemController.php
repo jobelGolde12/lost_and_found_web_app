@@ -48,4 +48,11 @@ class ItemController extends Controller
             'item' => $getItem
         ]);
     }
+
+    public function deleteItem($id){
+        $item = ItemModel::find($id);
+        $item->delete();
+
+        return back()->with('success', 'deleted');
+    }
 }
