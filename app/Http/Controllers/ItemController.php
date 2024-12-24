@@ -42,9 +42,18 @@ class ItemController extends Controller
         return response()->json(['success' => 'Item successfully created!'], 201);
     }
 
+    // para sa profile (sa na himo ni user na item)
     public function viewItem($item){
         $getItem = ItemModel::find($item);
         return Inertia::render('user/ViewItem', [
+            'item' => $getItem
+        ]);
+    }
+
+    // para sa dashboard (sa na himo san kada user na item)
+    public function viewItemInfo($item){
+        $getItem = ItemModel::find($item);
+        return Inertia::render('ViewItemInfo', [
             'item' => $getItem
         ]);
     }
@@ -53,6 +62,9 @@ class ItemController extends Controller
         $item = ItemModel::find($id);
         $item->delete();
 
-        return back()->with('success', 'deleted');
+        $getItem = ItemModel::find($item);
+        return Inertia::render('user/ViewItem', [
+            'item' => $getItem
+        ]);
     }
 }

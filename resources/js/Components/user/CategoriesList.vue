@@ -1,23 +1,26 @@
-<script setup>
-import { defineProps, ref } from 'vue';
-const props = defineProps({
-    categories: {
-    type: Object,
-    default: ({})
+<script>
+export default{
+    props: ['categories'],
+    data() {
+        return {
+            activeCategory: ''
+        }
+    },
+    methods: {
+        chooseCategoryFunc(id) {
+        this.activeCategory = id;
+        this.$emit('categorySelected', id)
     }
-})
-const activeCategory = ref();
-const chooseCategoryFunc = (id) => {
-    activeCategory.value = id;
+    }
 }
 </script>
 <template>
     <div class="container-fluid d-flex gap-2 align-items-center">
         <div>Categories:</div>
             <div class="list px-2 py-1 rounded"
-                v-for="data in props.categories" :key="data.id"
+                v-for="data in categories" :key="data.id"
                 :class="{'bg-secondary text-light' : activeCategory === data.id}"
-                @click="$emit('categorySelected', data.id)"
+                @click="chooseCategoryFunc(data.id)"
                 >
                     {{ data.name }}
             </div>

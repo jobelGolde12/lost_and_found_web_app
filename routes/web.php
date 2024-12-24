@@ -34,6 +34,8 @@ Route::get('/settings', [UserController::class, 'goToSettings'])->middleware(['a
 Route::get('/view-item/{item}', [ItemController::class, 'viewItem'])->name('viewItem');
 Route::delete('delete-item/{id}', [ItemController::class, 'deleteItem'])->name('deleteItem');
 
-
+// para sa report lost and report found item
 Route::post('/add-item', [ItemController::class, 'store'])->name('addItem');
+// na doble an view item info kay ini para sa dashboard while an saro na 'view-item' para sa profile 
+Route::get('/view-item-info/{item}', [ItemController::class, 'viewItemInfo'])->name('viewItemInfo');
 require __DIR__.'/auth.php';

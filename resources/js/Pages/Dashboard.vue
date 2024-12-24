@@ -17,16 +17,16 @@ const props = defineProps({
   },
 });
 
-// Add "All" category to the categories list
+
 const categoriesContainer = computed(() => {
   return [{ id: '', name: 'All', status: 'all' }, ...props.categories];
 });
 
-// Track the selected category and filter status
+
 const selectedCategory = ref('');
 const filterStatus = ref('all');
 
-// Filter items based on selected category and filter status
+
 const getItems = computed(() => {
   return props.items.filter(item => {
     const matchesCategory =
@@ -37,13 +37,13 @@ const getItems = computed(() => {
   });
 });
 
-// Update filterStatus when the filter changes
+
 const handleFilterChange = (filter) => {
   filterStatus.value = filter;
   console.log("Filter changed to:", filterStatus.value);
 };
 
-// Update selectedCategory when a category is clicked
+
 const handleCategoryChange = (categoryId) => {
   selectedCategory.value = categoryId;
   console.log("Selected category changed to:", selectedCategory.value);
@@ -94,6 +94,10 @@ const handleCategoryChange = (categoryId) => {
 
       <!-- List of all items -->
       <ItemCard :items="getItems" />
+
+      <div class="container" v-if="getItems.length === 0">
+          <h1 class="text-dark text-center text-muted">No item found...</h1>
+        </div>
     </div>
   </AuthenticatedLayout>
 </template>

@@ -27,7 +27,7 @@ const form = useForm({
 })
 const submitForm = () => {
     console.log('form: ' + JSON.stringify(form))
-    form.post(route('addLostItem'),  {
+    form.post(route('addItem'),  {
         onSuccess: () => alert('Submitted!'),
         onError: (errors) => console.log('error: ' + errors)
     });

@@ -26,7 +26,9 @@
                 <div>
                   <button 
                     class="button1" 
-                    @click="handleResponse('yes')">Yes</button>
+                    @click="handleResponse('yes')"
+                    data-bs-dismiss="modal"
+                    >Yes</button>
                 </div>
                 <div>
                   <button 
