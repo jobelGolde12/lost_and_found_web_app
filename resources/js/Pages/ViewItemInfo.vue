@@ -93,7 +93,6 @@ const getResponse = (res) => {
 </template>
 
 <style scoped>
-@import '../../../css/global.css';
 .view-item {
   max-width: 600px;
   margin: 0 auto;
