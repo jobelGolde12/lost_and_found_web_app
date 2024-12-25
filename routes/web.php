@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -33,6 +34,14 @@ Route::get('/report-found-item', [UserController::class, 'reportFoundItem'])->na
 Route::get('/settings', [UserController::class, 'goToSettings'])->middleware(['auth', 'verified'])->name('settings');
 Route::get('/view-item/{item}', [ItemController::class, 'viewItem'])->name('viewItem');
 Route::delete('delete-item/{id}', [ItemController::class, 'deleteItem'])->name('deleteItem');
+
+// Group settings routes under a single prefix
+Route::prefix('settings')->name('settings.')->group(function () {
+    Route::get('/trash', [SettingsController::class, 'trash'])->name('trash');
+    Route::get('/notifications', [SettingsController::class, 'notifications'])->name('notifications');
+    Route::get('/privacy', [SettingsController::class, 'privacy'])->name('privacy');
+});
+
 
 // para sa report lost and report found item
 Route::post('/add-item', [ItemController::class, 'store'])->name('addItem');
