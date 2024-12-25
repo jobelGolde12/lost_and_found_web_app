@@ -1,6 +1,7 @@
 
 <script setup>
 import { Head, Link } from '@inertiajs/vue3';
+import lostAndFoundLogo from '../../images/lost_and_found_logo.png';
 
 </script>
 
@@ -10,7 +11,9 @@ import { Head, Link } from '@inertiajs/vue3';
 
     <!-- Navagation bar -->
     <div class="navbar d-flex flex-row justify-content-between align-items-center px-3">
-        <div class="logo"><h4 class="text-dark">Lost And Found</h4></div>
+        <div class="logo">
+          <img :src="lostAndFoundLogo" alt="Application logo">
+        </div>
         <div class="links d-none d-lg-flex flex-row gap-4 align-items-center">
                 <a href="#about" class="text-dark text-decoration-none">About</a>
                 <!-- <Link :href="route('contactPage')" class="text-dark text-decoration-none">Contact</Link> -->

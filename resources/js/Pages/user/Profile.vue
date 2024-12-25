@@ -33,7 +33,7 @@ itemsContainer.value = props.items;
            </div>
 
            <div class="edit">
-            <button class="btn btn-dark"><i class="bi bi-pencil me-2"></i>Edit</button>
+            <Link :href="route('user.edit', {user: user})" class="btn btn-dark"><i class="bi bi-pencil me-2"></i>Edit</Link>
            </div>
 
         </div>

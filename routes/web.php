@@ -34,8 +34,10 @@ Route::get('/report-found-item', [UserController::class, 'reportFoundItem'])->na
 Route::get('/settings', [UserController::class, 'goToSettings'])->middleware(['auth', 'verified'])->name('settings');
 Route::get('/view-item/{item}', [ItemController::class, 'viewItem'])->name('viewItem');
 Route::delete('delete-item/{id}', [ItemController::class, 'deleteItem'])->name('deleteItem');
+Route::get('/user/{user}/edit', [UserController::class, 'edit'])->name('user.edit');
+Route::put('/user/{user}', [UserController::class, 'update'])->name('user.update');
 
-// Group settings routes under a single prefix
+
 Route::prefix('settings')->name('settings.')->group(function () {
     Route::get('/trash', [SettingsController::class, 'trash'])->name('trash');
     Route::get('/notifications', [SettingsController::class, 'notifications'])->name('notifications');
