@@ -1,4 +1,5 @@
 <template>
+   <AuthenticatedLayout >
     <div>
       <h1 class="text-2xl font-bold mb-4">Edit User</h1>
       <form @submit.prevent="submit">
@@ -35,36 +36,37 @@
         </button>
       </form>
     </div>
+   </AuthenticatedLayout>
   </template>
   
-  <script>
-  import { useForm } from '@inertiajs/vue3';
-  
-  export default {
-    props: {
-      user: Object,
-      userInfo: Object,
+  <script setup>
+ import { useForm } from '@inertiajs/vue3';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import { defineProps } from 'vue';
+const props = defineProps({
+    user: {
+        type: Object,
+        default: () => ({})
     },
-    setup(props) {
-      const form = useForm({
-        profile_pic: props.userInfo?.profile_pic || '',
-        address: props.userInfo?.address || '',
-        bio: props.userInfo?.bio || '',
-        contact: props.userInfo?.contact || '',
-        social_links: props.userInfo?.social_links || '',
-      });
-  
-      function submit() {
-        form.put(route('users.update', props.user.id));
-      }
-  
-      return { form, submit };
-    },
-    mounted(){
-        console.log('user => ' , props.user);
-        console.log('userInfo => ' , props.userInfo);
+    userInfo: {
+        type: Object,
+        default: () => ({})
     }
-  };
+})
+        const form = useForm({
+            profile_pic: props.userInfo ? props.userInfo.profile_pic : '',
+            address: props.userInfo ? props.userInfo.address : '',
+            bio: props.userInfo ? props.userInfo.bio : '',
+            contact: props.userInfo ? props.userInfo.contact : '',
+            social_links: props.userInfo ? props.userInfo.social_links : '',
+        });
+
+        const submit = () => {
+            form.put(route('users.update', props.user.id));
+        };
+
+        console.log('user => ', props.user);
+        console.log('userInfo => ', props.userInfo);
   </script>
   
   <style scoped>
