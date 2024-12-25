@@ -1,57 +1,64 @@
 <script setup>
 import { ref, watch } from 'vue';
+import { useRouter } from 'vue-router'; // Import useRouter for dynamic navigation
 import { Link, useForm } from '@inertiajs/vue3';
 import CustomModal from '@/Components/CustomModal.vue';
+
 const props = defineProps({
   item: {
     type: Object,
-    default: () => ({}), 
+    default: () => ({}),
   },
 });
 
+const router = useRouter(); // Initialize router
 const data = ref({});
 const deleteMessage = ref('Are you sure you want to delete this item?');
 const response = ref();
-
 
 watch(
   () => props.item,
   (newItem) => {
     data.value = newItem;
   },
-  { immediate: true } 
+  { immediate: true }
 );
 
 const deleteItem = useForm({
-  id: data.id
-})
+  id: data.id,
+});
 
-// response hali sa modal kung gusto ni user eh delete an item 
+// Response from the modal when the user wants to delete the item
 const getResponse = (res) => {
-  try{
+  try {
     if (res === 'yes') {
-    deleteItem.delete(route('deleteItem', { id: props.item?.id }), {
-      onSuccess: () => alert('deleted'),
-      onError: (errors) => console.log('error => ' + errors),
-    });
-  }
-  }catch(err){
+      deleteItem.delete(route('deleteItem', { id: props.item?.id }), {
+        onSuccess: () => alert('deleted'),
+        onError: (errors) => console.log('error => ' + errors),
+      });
+    }
+  } catch (err) {
     alert('item cannot be deleted.');
-    console.error('an error occured while deleting data => ' , err);
+    console.error('an error occurred while deleting data => ', err);
   }
+};
+
+// Navigate back to the previous page
+const goBack = () => {
+  router.back(); // Navigate back
 };
 </script>
 
 <template>
   <div class="container mx-auto">
     <div class="view-item card">
-    <div v-if="Object.keys(data).length > 0">
-      <div class="card-header">
-      <img v-if="data.image_url" :src="data.image_url" alt="Item Image" />  
-      </div>
-      
-      <div class="card-body">
-            <h1 class="my-2">{{ data.item_name || 'No name provided' }}</h1>
+      <div v-if="Object.keys(data).length > 0">
+        <div class="card-header">
+          <img v-if="data.image_url" :src="data.image_url" alt="Item Image" />
+        </div>
+
+        <div class="card-body">
+          <h1 class="my-2">{{ data.item_name || 'No name provided' }}</h1>
           <p><strong>Description:</strong> {{ data.item_description }}</p>
           <p><strong>Status:</strong> {{ data.status }}</p>
           <p><strong>Location:</strong> {{ data.location }}</p>
@@ -59,37 +66,34 @@ const getResponse = (res) => {
           <p><strong>Created at:</strong> {{ new Date(data.created_at).toLocaleString() }}</p>
 
           <div class="container px-0 d-flex flex-row gap-2 mt-2">
-
             <button class="button1">
               <span class="d-block d-lg-none"><i class="bi bi-pencil"></i></span>
               <span class="d-none d-lg-inline">Update</span>
             </button>
 
-            
             <button 
-            class="btn btn-warning"
-            data-bs-toggle="modal" 
-            data-bs-target="#customModal"
+              class="btn btn-warning"
+              data-bs-toggle="modal" 
+              data-bs-target="#customModal"
             >
               <span class="d-block d-lg-none"><i class="bi bi-trash"></i></span>
               <span class="d-none d-lg-inline">Delete</span>
             </button>
 
-            <Link :href="route('profile')" class="btn btn-dark">
+            <button @click="goBack" class="btn btn-dark">
               <span class="d-block d-lg-none"><i class="bi bi-arrow-left"></i></span>
               <span class="d-none d-lg-inline">Back</span>
-            </Link>
+            </button>
           </div>
+        </div>
+      </div>
+      <div v-else>
+        <p>Loading item details...</p>
       </div>
     </div>
-    <div v-else>
-      <p>Loading item details...</p>
-    </div>
-  </div>
   </div>
 
-
-  <CustomModal :name="deleteMessage" :id="data.id" @response="getResponse"/>
+  <CustomModal :name="deleteMessage" :id="data.id" @response="getResponse" />
 </template>
 
 <style scoped>
@@ -102,7 +106,7 @@ const getResponse = (res) => {
   border-radius: 8px;
   background-color: #fff;
 }
-.view-item .card-header{
+.view-item .card-header {
   height: 400px;
   position: relative;
   width: 100%;
