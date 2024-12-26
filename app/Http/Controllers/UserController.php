@@ -42,16 +42,27 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
-        $validatedData = $request->validate([
+        $request->validate([
             'profile_pic' => 'nullable|string',
             'address' => 'nullable|string',
             'bio' => 'nullable|string',
             'contact' => 'nullable|string',
             'social_links' => 'nullable|json',
         ]);
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('profile_pic')->store('images', 'public');
+        }
+        $user->info->updateOrCreate(
+            ['user_id' => $user->id],
+            [
+            'profile_pic' => $imagePath ? asset('storage/' . $imagePath) : null,
+            'address' => $request->address,
+            'bio' => $request->bio ?: 'none',
+            'contact' => $request->contact,
+            'social_links' => $request->social_links,
+        ]);
 
-        $user->info->update($validatedData);
-
-        return redirect()->route('users.edit', $user)->with('success', 'User information updated successfully.');
+        return redirect()->route('user.edit', $user)->with('success', 'User information updated successfully.');
     }
 }

@@ -5,6 +5,7 @@ body{
     --clr-primary: #fff;
     --clr-secondary: #333;
     --clr-hover: #14374333;
+    --border-clr: #333;
 }
 html{
     scroll-behavior: smooth;
@@ -35,4 +36,7 @@ html{
   width: fit-content;
   word-break: break-word;
   border: 0;
+}
+.has-border{
+    border: 1px solid var(--border-clr);
 }
