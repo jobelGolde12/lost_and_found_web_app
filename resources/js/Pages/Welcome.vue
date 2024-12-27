@@ -35,8 +35,7 @@ import lostAndFoundLogo from '../../images/lost_and_found_logo.png';
                     <p class="text-dark text-center ">Join others in Bulan and report lost or found items with just a few clicks.</p>
 
                     <div class="action-button container d-flex flex-row align-items-center justify-content-center gap-5 pt-3 px-5">
-                        <a href="#" class="text-decoration-none report-lost-item-link px-3 py-2">Report Lost Item <i class="bi bi-arrow-right text-dark"></i></a>
-                        <Link :href="route('dashboard')" class="text-decoration-none text-light bg-dark px-3 py-2 report-found-item-link">Report Found Item</Link>
+                        <Link :href="route('dashboard')" class="text-decoration-none text-light bg-dark px-3 py-2 report-found-item-link">Get started  <i class="bi bi-arrow-right"></i></Link>
                     </div>
 
                 <!-- <div class="hero-image-container mt-5 p-0 pt-5 bg-light d-flex flex-row align-items-center ps-0 ms-0">

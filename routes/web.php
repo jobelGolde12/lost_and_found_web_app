@@ -37,7 +37,7 @@ Route::delete('delete-item/{id}', [ItemController::class, 'deleteItem'])->name('
 Route::get('/user/{user}/edit', [UserController::class, 'edit'])->name('user.edit');
 Route::put('/user/{user}', [UserController::class, 'update'])->name('user.update');
 
-
+    
 Route::prefix('settings')->name('settings.')->group(function () {
     Route::get('/trash', [SettingsController::class, 'trash'])->name('trash');
     Route::get('/notifications', [SettingsController::class, 'notifications'])->name('notifications');
@@ -49,4 +49,5 @@ Route::prefix('settings')->name('settings.')->group(function () {
 Route::post('/add-item', [ItemController::class, 'store'])->name('addItem');
 // na doble an view item info kay ini para sa dashboard while an saro na 'view-item' para sa profile 
 Route::get('/view-item-info/{item}', [ItemController::class, 'viewItemInfo'])->name('viewItemInfo');
+Route::get('/visit-user/{id}', [ItemController::class, 'visitUser'])->name('visitUser');
 require __DIR__.'/auth.php';

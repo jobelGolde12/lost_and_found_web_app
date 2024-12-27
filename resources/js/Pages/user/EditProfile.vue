@@ -5,7 +5,7 @@
       <div>
       <h1 class="text-2xl font-bold mb-4 fw-lighter mt-2 text-center">Edit Profile</h1>
       </div>
-      <form @submit.prevent="submit" class="form mx-auto">
+      <form @submit.prevent="submit" class="form mx-auto" enctype="multipart/form-data">
         <div class="row">
           <div class="col-12 col-lg-6">
           <label for="profile_pic" class="block font-medium"

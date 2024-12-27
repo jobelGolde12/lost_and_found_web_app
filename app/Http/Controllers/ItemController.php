@@ -2,7 +2,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\ItemModel;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
@@ -53,11 +55,19 @@ class ItemController extends Controller
     // para sa dashboard (sa na himo san kada user na item)
     public function viewItemInfo($item){
         $getItem = ItemModel::find($item);
+        // Log::info( $item);
+        $created_by = User::find($getItem->user_id);
         return Inertia::render('ViewItemInfo', [
-            'item' => $getItem
+            'item' => $getItem,
+            'created_by' => $created_by
         ]);
     }
 
+    // kapag in view ni user an item tas in click an visit {{ name }} ma kadto cya sa
+    // profile san user na nag himo san item
+    public function visitUser($id){
+
+    }
     public function deleteItem($id){
         $item = ItemModel::find($id);
         $item->delete();

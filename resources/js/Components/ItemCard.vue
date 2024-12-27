@@ -34,8 +34,7 @@ const itemContainer = computed(() => props.items);
           <a
             href="#"
             class="btn btn-light"
-            v-if="data.owner_phone_number"
-            >Call: {{ data.owner_phone_number }}</a
+            >asd</a
           >
         </div>
       </Link>

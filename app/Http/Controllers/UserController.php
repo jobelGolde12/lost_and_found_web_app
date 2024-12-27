@@ -51,6 +51,8 @@ class UserController extends Controller
             'facebook_link' => 'nullable|string',
         ]);
         $imagePath = null;
+        // Log::info('File received: ', $request->file('profile_pic'));
+        Log::info('The image is => ' . json_encode($request->all()));
         if ($request->hasFile('profile_pic')) {
             $imagePath = $request->file('profile_pic')->store('images', 'public');
             Log::info('File received: ' . $request->file('profile_pic')->getClientOriginalName());
