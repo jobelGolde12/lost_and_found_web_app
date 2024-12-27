@@ -1,5 +1,6 @@
 <template>
   <AuthenticatedLayout>
+    <Head title="Edit profile" />
     <div class="container container-top ">
       <div>
       <h1 class="text-2xl font-bold mb-4 fw-lighter mt-2 text-center">Edit Profile</h1>
@@ -26,7 +27,7 @@
             v-model="form.address"
             id="address"
             class="rounded px-3 py-2 w-full"
-            placeholder="Bonga, Bulan, Sorsogon"
+            placeholder="ex: Bonga, Bulan, Sorsogon"
           />
         </div>
         </div>
@@ -49,17 +50,18 @@
             id="contact"
             type="text"
             class=" rounded px-3 py-2 w-full"
-            placeholder="09460163977"
+            placeholder="ex: 09460163977"
           />
         </div>
 
         <div class="col-12 col-lg-6">
-          <label for="social_links" class="block font-medium"
+          <label for="facebook_link" class="block font-medium"
             >Social Links (optional)</label
           >
           <input
-            v-model="form.social_links"
-            id="social_links"
+            type="text"
+            v-model="form.facebook_link"
+            id="facebook_link"
             class="rounded px-3 py-2 w-full"
             placeholder="facebook/twitter/instagram/etc."
           />
@@ -78,7 +80,7 @@
 </template>
   
   <script setup>
-import { useForm } from "@inertiajs/vue3";
+import { useForm, Head } from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { defineProps } from "vue";
 const props = defineProps({
@@ -96,15 +98,31 @@ const form = useForm({
   address: props.userInfo ? props.userInfo.address : "",
   bio: props.userInfo ? props.userInfo.bio : "",
   contact: props.userInfo ? props.userInfo.contact : "",
-  social_links: props.userInfo ? props.userInfo.social_links : "",
+  facebook_link: props.userInfo ? props.userInfo.facebook_link : "",
 });
 
+// const submit = () => {
+//   form.put(route("user.update", props.user.id),{
+//     onSuccess: () => alert('Sumitted!'),
+//     onError: (errors) => console.error('An error occured while updatings profile => ' , errors)
+//   });
+// };
+
 const submit = () => {
-  form.put(route("user.update", props.user.id),{
-    onSuccess: () => alert('Sumitted!'),
-    onError: (errors) => console.error('An error occured while updatings profile => ' , errors)
+  const data = new FormData();
+  data.append("profile_pic", form.profile_pic);
+  data.append("address", form.address);
+  data.append("bio", form.bio);
+  data.append("contact", form.contact);
+  data.append("facebook_link", form.social_links);
+
+  form.put(route("user.update", props.user.id), {
+    data,
+    onSuccess: () => alert("Submitted!"),
+    onError: (errors) => console.error("An error occurred while updating profile:", errors),
   });
 };
+
 
 const handleFileChange = (event) => {
     const file = event.target.files[0];

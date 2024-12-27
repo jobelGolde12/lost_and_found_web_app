@@ -43,14 +43,14 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $request->validate([
-            'profile_pic' => 'nullable|string',
+            'profile_pic' => 'nullable|file|mimes:jpeg,png,jpg,gif',
             'address' => 'nullable|string',
             'bio' => 'nullable|string',
             'contact' => 'nullable|string',
-            'social_links' => 'nullable|json',
+            'facebook_link' => 'nullable|string',
         ]);
         $imagePath = null;
-        if ($request->hasFile('image')) {
+        if ($request->hasFile('profile_pic')) {
             $imagePath = $request->file('profile_pic')->store('images', 'public');
         }
         $user->info->updateOrCreate(
@@ -60,7 +60,7 @@ class UserController extends Controller
             'address' => $request->address,
             'bio' => $request->bio ?: 'none',
             'contact' => $request->contact,
-            'social_links' => $request->social_links,
+            'facebook_link' => $request->facebook_link,
         ]);
 
         return redirect()->route('user.edit', $user)->with('success', 'User information updated successfully.');
