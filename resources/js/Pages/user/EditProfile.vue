@@ -116,6 +116,7 @@ const submit = () => {
   data.append("contact", form.contact);
   data.append("facebook_link", form.social_links);
 
+  console.log([...data.entries()]);
   form.put(route("user.update", props.user.id), {
     data,
     onSuccess: () => alert("Submitted!"),

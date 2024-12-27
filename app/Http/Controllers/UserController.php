@@ -6,6 +6,7 @@ use App\Models\ItemCategories;
 use App\Models\LocationModel;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
 class UserController extends Controller
@@ -52,16 +53,23 @@ class UserController extends Controller
         $imagePath = null;
         if ($request->hasFile('profile_pic')) {
             $imagePath = $request->file('profile_pic')->store('images', 'public');
+            Log::info('File received: ' . $request->file('profile_pic')->getClientOriginalName());
         }
-        $user->info->updateOrCreate(
-            ['user_id' => $user->id],
-            [
-            'profile_pic' => $imagePath ? asset('storage/' . $imagePath) : null,
-            'address' => $request->address,
-            'bio' => $request->bio ?: 'none',
-            'contact' => $request->contact,
-            'facebook_link' => $request->facebook_link,
-        ]);
+       
+        try {
+            $user->info->updateOrCreate(
+                ['user_id' => $user->id],
+                [
+                'profile_pic' => $imagePath ? asset(path: 'storage/' . $imagePath) : $user->info->profile_pic,
+                'address' => $request->address,
+                'bio' => $request->bio ?: 'none',
+                'contact' => $request->contact,
+                'facebook_link' => $request->facebook_link,
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Error updating user info: ' . $e->getMessage());
+            return back()->withErrors('Failed to update user info.');
+        }
 
         return redirect()->route('user.edit', $user)->with('success', 'User information updated successfully.');
     }
