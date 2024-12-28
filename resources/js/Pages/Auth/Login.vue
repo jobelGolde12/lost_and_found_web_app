@@ -1,6 +1,6 @@
 <script setup>
 import Checkbox from '@/Components/Checkbox.vue';
-import GuestLayout from '@/Layouts/GuestLayout.vue';
+import LoginAndRegisterLayout from '@/Layouts/LoginAndRegisterLayout.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
@@ -49,10 +49,10 @@ const submit = () => {
 </style>
 
 <template>
-   <div class="main-container bg-light">
+    <Head title="Login" />
     
-    <GuestLayout>
-        <Head title="Log in" />
+    <LoginAndRegisterLayout>
+        <div class="main-container bg-light d-flex justify-content-center align-items-center">
 
         <div v-if="status" class="mb-4 text-sm font-medium text-green-600">
             {{ status }}
@@ -121,8 +121,8 @@ const submit = () => {
                 <p class="text-dark fw-light mt-3 text-center">Didn't have an account? | <Link :href="route('register')"> Signup </Link></p>
             </div>
         </form>
-    </GuestLayout>
-    <button class="btn btn-dark go-back">Go back</button>
    </div>
+    </LoginAndRegisterLayout>
+    <button class="btn btn-dark go-back">Go back</button>
 </template>
 
