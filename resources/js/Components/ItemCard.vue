@@ -13,7 +13,7 @@ const itemContainer = computed(() => props.items);
 </script>
 
 <template>
-  <div class="card-container container-fluid d-flex flex-row flex-wrap mt-4 gap-3 justify-content-center">
+  <div class="card-container container-fluid d-flex flex-row flex-wrap mt-4 gap-3 justify-content-center" v-if="itemContainer">
     <div
       class="card"
       v-for="data in itemContainer"
@@ -31,14 +31,21 @@ const itemContainer = computed(() => props.items);
         <div class="card-body">
           <h5 class="card-title text-dark">{{ data.item_name }}</h5>
           <p class="card-text text-muted">{{ data.item_description }}</p>
-          <a
+          <div
             href="#"
-            class="btn btn-light"
-            >asd</a
-          >
+            class="btn btn-light ps-0 d-flex flex-row gap-2 align-items-center"
+            >
+              <div><img src="../../images/profile.png" alt="profile" class="default-profile"></div>
+              <div class="owner_name">Jhone Doe</div>
+          </div>
         </div>
       </Link>
     </div>
+
+    <div class="container text-center" v-if="itemContainer.length === 0">
+      No Item.
+    </div>
+    <!-- Para may extra space sa baba -->
     <div class="container-bottom mt-5"></div>
   </div>
 </template>
@@ -47,6 +54,7 @@ const itemContainer = computed(() => props.items);
 .card-container {
   position: relative;
   width: 100%;
+  height: 100vh;
   overflow-y: scroll;
   overflow-x: hidden;
   padding-bottom: 2rem;
@@ -76,7 +84,7 @@ const itemContainer = computed(() => props.items);
   border-radius: 8px;
 }
 
-.card img {
+.card .card-img-top {
   width: 100%;
   height: 100%;
   object-fit: cover; 
@@ -89,9 +97,13 @@ const itemContainer = computed(() => props.items);
 
 .container-bottom {
   width: 100%;
-  height: 50px;
+  height: 200px;
 }
-
+.default-profile{
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
 @media (max-width: 768px) {
   .card {
     max-width: 100%;
