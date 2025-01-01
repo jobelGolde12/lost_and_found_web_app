@@ -16,12 +16,9 @@ class UserInfo extends Model
         'address',
         'bio',
         'contact',
-        'social_links',
+        'facebook_links',
     ];
 
-    protected $casts = [
-        'social_links' => 'array',
-    ];
 
     /**
      * Get the user that owns the UserInfo

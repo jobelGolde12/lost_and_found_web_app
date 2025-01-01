@@ -7,6 +7,7 @@ use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Inertia\Inertia;
 
 Route::get('/', function () {
@@ -50,4 +51,20 @@ Route::post('/add-item', [ItemController::class, 'store'])->name('addItem');
 // na doble an view item info kay ini para sa dashboard while an saro na 'view-item' para sa profile 
 Route::get('/view-item-info/{item}', [ItemController::class, 'viewItemInfo'])->name('viewItemInfo');
 Route::get('/visit-user/{id}', [ItemController::class, 'visitUser'])->name('visitUser');
+
+// para sa email verification 
+Route::get('/email/verify', function () {
+    return Inertia::render('Auth/VerifyEmail');
+})->middleware(['auth'])->name('verification.notice');
+
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+    return redirect('/dashboard'); // Change to your desired page after verification
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+Route::post('/email/resend', function (Illuminate\Http\Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+    return back()->with('status', 'verification-link-sent');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
 require __DIR__.'/auth.php';
