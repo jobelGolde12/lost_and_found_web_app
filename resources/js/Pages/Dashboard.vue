@@ -14,10 +14,10 @@ const props = defineProps({
   items: {
     type: Array,
     default: [],
-  },
+  },  
 });
 
-
+const itemNameContainer = computed(() => props.items.map(item => item.item_name));
 const categoriesContainer = computed(() => {
   return [{ id: '', name: 'All', status: 'all' }, ...props.categories];
 });
@@ -70,10 +70,10 @@ const handleCategoryChange = (categoryId) => {
             style="outline: none"
           />
 
-          <datalist id="categories">
+          <datalist id="categories" v-if="itemNameContainer">
             <option
-              :value="data.name"
-              v-for="data in categoriesContainer"
+              :value="data"
+              v-for="data in itemNameContainer"
               :key="data.id"
             ></option>
           </datalist>
