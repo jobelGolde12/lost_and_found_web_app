@@ -51,6 +51,7 @@ Route::post('/add-item', [ItemController::class, 'store'])->name('addItem');
 // na doble an view item info kay ini para sa dashboard while an saro na 'view-item' para sa profile 
 Route::get('/view-item-info/{item}', [ItemController::class, 'viewItemInfo'])->name('viewItemInfo');
 Route::get('/visit-user/{id}', [ItemController::class, 'visitUser'])->name('visitUser');
+Route::get('/items/search', [ItemController::class, 'search'])->name('items.search');
 
 // para sa email verification 
 Route::get('/email/verify', function () {

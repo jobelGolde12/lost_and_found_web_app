@@ -77,4 +77,19 @@ class ItemController extends Controller
             'item' => $getItem
         ]);
     }
+
+    // para sa search features 
+    public function search(Request $request)
+    {
+        $searchQuery = $request->input('query', '');
+
+        // Fetch items matching the search query
+        $items = ItemModel::where('item_name', 'LIKE', '%' . $searchQuery . '%')->get();
+
+        // Return results with Inertia
+        return Inertia::render('ViewItemInfo', [
+            'searchQuery' => $searchQuery,
+            'items' => $items,
+        ]);
+    }
 }

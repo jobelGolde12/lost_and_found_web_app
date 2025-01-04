@@ -1,7 +1,7 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import FilterComponent from "@/Components/user/FilterComponent.vue";
-import { Head } from "@inertiajs/vue3";
+import { Head, useForm } from "@inertiajs/vue3";
 import { computed, defineProps, ref } from "vue";
 import CategoriesList from "@/Components/user/CategoriesList.vue";
 import ItemCard from "@/Components/ItemCard.vue";
@@ -48,6 +48,16 @@ const handleCategoryChange = (categoryId) => {
   selectedCategory.value = categoryId;
   console.log("Selected category changed to:", selectedCategory.value);
 };
+
+// for seach features 
+const searchForm = useForm({
+  query: '', 
+});
+const handleSearch = () => {
+  if (searchForm.query.trim()) {
+    searchForm.get(route('items.search'), { preserveState: true });
+  }
+};
 </script>
 
 <template>
@@ -68,6 +78,8 @@ const handleCategoryChange = (categoryId) => {
             aria-label="Search"
             list="categories"
             style="outline: none"
+            v-model="searchForm.query"
+            @keyup.enter="handleSearch"
           />
 
           <datalist id="categories" v-if="itemNameContainer">
@@ -77,7 +89,7 @@ const handleCategoryChange = (categoryId) => {
               :key="data.id"
             ></option>
           </datalist>
-          <button class="btn btn-light" type="button">
+          <button class="btn btn-light" type="button" @click="handleSearch">
             <i class="bi bi-search"></i>
           </button>
         </div>
