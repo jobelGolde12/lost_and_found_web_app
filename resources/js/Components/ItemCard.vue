@@ -28,6 +28,7 @@ const itemContainer = computed(() => props.items);
             v-if="data.image_url"
           />
         </div>
+      </Link>
         <div class="card-body">
           <h5 class="card-title text-dark">{{ data.item_name }}</h5>
           <p class="card-text text-muted">{{ data.item_description }}</p>
@@ -39,7 +40,6 @@ const itemContainer = computed(() => props.items);
               <div class="owner_name">Jhone Doe</div>
           </div>
         </div>
-      </Link>
     </div>
 
     <div class="container text-center" v-if="itemContainer.length === 0">
@@ -67,28 +67,35 @@ const itemContainer = computed(() => props.items);
   padding: 15px;
   background-color: white;
   cursor: pointer;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s, box-shadow 0.2s;
+    /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s; */
+  border: none;
 }
 
-.card:hover {
+/* .card:hover {
   transform: scale(1.03);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
   background: rgba(200, 195, 195, 0.1);
-}
+} */
 
 .image-container {
   width: 100%;
   height: 200px; 
   overflow: hidden;
   border-radius: 8px;
+  overflow: hidden;
 }
 
-.card .card-img-top {
+.image-container .card-img-top {
   width: 100%;
   height: 100%;
   object-fit: cover; 
   object-position: top; 
+  transition: .5s;
+}
+.image-container .card-img-top:hover{
+  transform: scale(1.1);
+  filter: brightness(.8);
 }
 
 .card-body {

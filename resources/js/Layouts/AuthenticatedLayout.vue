@@ -100,7 +100,9 @@ onMounted(() => {
     </div>
 
     <!-- Page Content -->
-    <main :style="{ width: isSidebarOpen ? '80%' : '95%' }" class="right">
+    <main 
+    :style="{ width: isSidebarOpen ? '80%' : '95%' }" 
+    class="right">
       <slot />
     </main>
   </div>
@@ -190,6 +192,11 @@ onMounted(() => {
 @media screen and (max-width: 800px) {
   .main-container .sidebar{
     display: none;
+  }
+  .main-container .right{
+    position: absolute;
+    width: 100vw;
+    background: #000;
   }
 }
 </style>
