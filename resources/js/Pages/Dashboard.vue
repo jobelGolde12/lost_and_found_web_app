@@ -55,6 +55,7 @@ const searchForm = useForm({
 });
 const handleSearch = () => {
   if (searchForm.query.trim()) {
+    // preserveState ensures the state of the search bar and other components is maintained during navigation.
     searchForm.get(route('items.search'), { preserveState: true });
   }
 };

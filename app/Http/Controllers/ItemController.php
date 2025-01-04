@@ -83,11 +83,9 @@ class ItemController extends Controller
     {
         $searchQuery = $request->input('query', '');
 
-        // Fetch items matching the search query
         $items = ItemModel::where('item_name', 'LIKE', '%' . $searchQuery . '%')->get();
 
-        // Return results with Inertia
-        return Inertia::render('ViewItemInfo', [
+        return Inertia::render('user/SearchResults', [
             'searchQuery' => $searchQuery,
             'items' => $items,
         ]);
