@@ -23,7 +23,7 @@ console.log("props => " , JSON.stringify(props))
         <AuthenticatedLayout>
 
     <div class="search-results-container">
-        <!-- <Head title="Search results" /> -->
+        <Head title="Search results" />
          <h5 class="text-dark fw-lighter pt-3">Results for {{ searchQuery }}</h5>
 
       <ItemCard :items="getItems" />
