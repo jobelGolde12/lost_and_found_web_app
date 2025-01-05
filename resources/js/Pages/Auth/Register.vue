@@ -1,5 +1,4 @@
 <script setup>
-import GuestLayout from '@/Layouts/GuestLayout.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
@@ -23,12 +22,26 @@ const submit = () => {
     });
 };
 </script>
+<style scoped>
+.main-container{
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
 
+}
+.main-container .form{
+    position: relative;
+    width: 35%;
+    height: auto;
+}
+</style>
 <template>
-    <GuestLayout>
         <Head title="Register" />
-
-        <form @submit.prevent="submit">
+ <div class="main-container d-flex flex-row justify-content-center align-items-center">
+    
+    <form @submit.prevent="submit" class="form">
+        <h2 class="text-dark text-center fw-semibold">Register now!</h2>
             <div>
                 <InputLabel for="name" value="Name" />
 
@@ -40,6 +53,8 @@ const submit = () => {
                     required
                     autofocus
                     autocomplete="name"
+                    style="border-radius: 10px"
+                    placeholder="your name"
                 />
 
                 <InputError class="mt-2" :message="form.errors.name" />
@@ -55,6 +70,8 @@ const submit = () => {
                     v-model="form.email"
                     required
                     autocomplete="username"
+                    style="border-radius: 10px"
+                    placeholder="you@example.com"
                 />
 
                 <InputError class="mt-2" :message="form.errors.email" />
@@ -70,6 +87,8 @@ const submit = () => {
                     v-model="form.password"
                     required
                     autocomplete="new-password"
+                    style="border-radius: 10px"
+                    placeholder="8 letters and long"
                 />
 
                 <InputError class="mt-2" :message="form.errors.password" />
@@ -88,6 +107,8 @@ const submit = () => {
                     v-model="form.password_confirmation"
                     required
                     autocomplete="new-password"
+                    style="border-radius: 10px"
+                    placeholder="8 letters and long"
                 />
 
                 <InputError
@@ -96,22 +117,34 @@ const submit = () => {
                 />
             </div>
 
-            <div class="mt-4 flex items-center justify-end">
-                <Link
-                    :href="route('login')"
-                    class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                >
-                    Already registered?
-                </Link>
+            <div class="mt-4 d-flex flex-row gap-2 align-items-center justify-content-start">
+                <div><input type="checkbox" style="border-radius: 5px;"></div>
+                <div class=" pt-3">
+                    <p>I agree to the <a href="#" class="text-dark text-underline">terms and policy</a></p>
+                </div>
+            </div>
 
-                <PrimaryButton
-                    class="ms-4"
+            <div class="mt-4 d-flex flex-column align-items-center">
+                <button
+                    class="bg-dark text-light w-100 rounded text-center py-2"
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
                 >
                     Register
-                </PrimaryButton>
+            </button>
+
+            <div class="mt-4">
+                Already registered?
+                <Link
+                    :href="route('login')"
+                    class="text-primary"
+                >
+                    signin
+                </Link>
+            </div>
+
+               
             </div>
         </form>
-    </GuestLayout>
+ </div>
 </template>
