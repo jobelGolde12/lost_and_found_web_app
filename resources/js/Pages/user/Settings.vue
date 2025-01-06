@@ -53,9 +53,13 @@ const userSettings = [
           >
             Go to {{ setting.name }}
           </Link>
+
         </div>
       </div>
     </div>
+
+    <Link :href="route('logout')" method="post">Logout </Link>
+
   </UserSettingsLayout>
 </template>
 

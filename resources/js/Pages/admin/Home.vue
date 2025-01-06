@@ -1,13 +1,12 @@
-<template>
-    <div>
-        This is the admin dashboard
-    </div>
-</template>
-<script>
-export default {
-    
-}
+
+<script setup>
+import AdminLayout from '@/Layouts/AdminLayout.vue';
 </script>
-<style lang="">
-    
+<template>
+    <AdminLayout >
+        as
+    </AdminLayout>
+</template>
+<style lang="css" scoped>
+
 </style>
