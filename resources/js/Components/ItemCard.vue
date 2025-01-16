@@ -32,12 +32,20 @@ const itemContainer = computed(() => props.items);
         <div class="card-body">
           <h5 class="card-title text-dark">{{ data.item_name }}</h5>
           <p class="card-text text-muted">{{ data.item_description }}</p>
-          <div
-            href="#"
-            class="btn btn-light ps-0 d-flex flex-row gap-2 align-items-center"
-            >
-              <div><img src="../../images/profile.png" alt="profile" class="default-profile"></div>
-              <div class="owner_name">Jhone Doe</div>
+          <div class="container-fluid d-flex flex-row justify-content-between align-items-center px-0">
+            <div class="left">
+                  <div
+                href="#"
+                class=" ps-0 d-flex flex-row gap-2 align-items-center"
+                >
+                  <div><img src="../../images/profile.png" alt="profile" class="default-profile"></div>
+                      <div class="owner_name">Jhone Doe</div>
+                  </div>
+            </div>
+
+            <div class="right">
+              <i class="btn btn-light bi bi-bookmark" title="View later"></i>
+            </div>
           </div>
         </div>
     </div>
