@@ -1,6 +1,7 @@
 <script setup>
 import { computed } from "vue";
 import { Link } from "@inertiajs/vue3";
+import { ref } from "vue";
 
 const props = defineProps({
   items: {
@@ -8,7 +9,7 @@ const props = defineProps({
     default: [],
   },
 });
-
+let viewLater = ref(false);
 const itemContainer = computed(() => props.items);
 </script>
 
@@ -44,7 +45,7 @@ const itemContainer = computed(() => props.items);
             </div>
 
             <div class="right">
-              <i class="btn btn-light bi bi-bookmark" title="View later"></i>
+              <i class="btn btn-light bi bi-bookmark" title="View later" :class="{'bi-bookmar-fill' : viewLater}"></i>
             </div>
           </div>
         </div>
