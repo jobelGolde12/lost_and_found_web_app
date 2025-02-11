@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from "vue";
+import { computed, onMounted } from "vue";
 import { Link } from "@inertiajs/vue3";
 import { ref } from "vue";
 

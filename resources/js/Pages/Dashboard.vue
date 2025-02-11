@@ -63,7 +63,6 @@ const handleSearch = () => {
 
 <template>
   <Head title="Dashboard" />
-
   <AuthenticatedLayout>
     <div class="main-container">
       <div

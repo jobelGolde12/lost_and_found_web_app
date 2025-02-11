@@ -13,6 +13,7 @@ class DashboardController extends Controller
     public function index(){
         $categories = ItemCategories::all();
         $items = ItemModel::all();
+        // $itemOwnerName = ItemModel::find()
         if (Auth::check() && Auth::user()->role === 'user') { 
             return Inertia::render('Dashboard', [
                 'categories' => $categories,
