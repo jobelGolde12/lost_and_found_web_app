@@ -17,4 +17,8 @@ class ItemModel extends Model
         'category_id',
         'owner_phone_number',
     ];
+
+    function user(){
+        return $this->belongsTo(User::class, 'user_id', 'id');   
+    }
 }

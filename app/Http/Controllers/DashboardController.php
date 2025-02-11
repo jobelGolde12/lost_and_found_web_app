@@ -13,11 +13,15 @@ class DashboardController extends Controller
     public function index(){
         $categories = ItemCategories::all();
         $items = ItemModel::all();
-        // $itemOwnerName = ItemModel::find()
+        $ownerName = ItemModel::with('user:id,name')->get();
+        $ownerData = [
+            'ownerName' => $ownerName,
+        ];
         if (Auth::check() && Auth::user()->role === 'user') { 
             return Inertia::render('Dashboard', [
                 'categories' => $categories,
-                'items' => $items
+                'items' => $items,
+                'ownerData' => $ownerData,
         ]); 
         }else if (Auth::check() && Auth::user()->role === 'admin') { 
             return Inertia::render('admin/Home', [

@@ -8,9 +8,14 @@ const props = defineProps({
     type: Array,
     default: [],
   },
+  ownerData: {
+    type: Object,
+    default: ({}),
+  },
 });
 let viewLater = ref(false);
 const itemContainer = computed(() => props.items);
+console.log('ownerData => ' + JSON.stringify(props.ownerData) || 'No data')
 </script>
 
 <template>
@@ -50,7 +55,6 @@ const itemContainer = computed(() => props.items);
           </div>
         </div>
     </div>
-
     <div class="container text-center" v-if="itemContainer.length === 0">
       No Item.
     </div>

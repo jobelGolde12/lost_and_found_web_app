@@ -38,6 +38,9 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasOne(UserInfo::class, 'user_id');
     }
+    public function ownerName(){
+        return $this->hasOne(ItemModel::class, 'user_id');
+    }
 
     /**
      * Get the attributes that should be cast.
