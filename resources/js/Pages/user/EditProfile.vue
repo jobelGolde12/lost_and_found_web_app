@@ -1,3 +1,60 @@
+
+<script setup>
+import { useForm, Head } from "@inertiajs/vue3";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import { defineProps } from "vue";
+const props = defineProps({
+  user: {
+    type: Object,
+    default: () => ({}),
+  },
+  userInfo: {
+    type: Object,
+    default: () => ({}),
+  },
+});
+const form = useForm({
+  profile_pic: null,
+  address: props.userInfo ? props.userInfo.address : "",
+  bio: props.userInfo ? props.userInfo.bio : "",
+  contact: props.userInfo ? props.userInfo.contact : "",
+  facebook_link: props.userInfo ? props.userInfo.facebook_link : "",
+});
+
+// const submit = () => {
+//   form.put(route("user.update", props.user.id),{
+//     onSuccess: () => alert('Sumitted!'),
+//     onError: (errors) => console.error('An error occured while updatings profile => ' , errors)
+//   });
+// };
+
+const submit = () => {
+  console.log("form data => " , form.data())
+  form.transform((data) => {
+  const formData = new FormData();
+  Object.keys(data).forEach((key) => {
+    formData.append(key, data[key]);
+  });
+  return formData;
+  }).put(route("user.update", props.user.id), {
+    forceFormData: true,
+    onSuccess: () => alert("Submitted!"),
+    onError: (errors) => console.error("An error occurred:", errors),
+  });
+};
+
+
+const handleFileChange = (event) => {
+    // const file = event.target.files[0];
+    form.profile_pic = event.target.files[0] || null;
+};
+
+console.log("user => ", props.user);
+console.log("userInfo => ", props.userInfo);
+
+</script>
+  
+
 <template>
   <AuthenticatedLayout>
     <Head title="Edit profile" />
@@ -78,62 +135,6 @@
     </div>
   </AuthenticatedLayout>
 </template>
-  
-  <script setup>
-import { useForm, Head } from "@inertiajs/vue3";
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { defineProps } from "vue";
-const props = defineProps({
-  user: {
-    type: Object,
-    default: () => ({}),
-  },
-  userInfo: {
-    type: Object,
-    default: () => ({}),
-  },
-});
-const form = useForm({
-  profile_pic: props.userInfo ? props.userInfo.profile_pic : "",
-  address: props.userInfo ? props.userInfo.address : "",
-  bio: props.userInfo ? props.userInfo.bio : "",
-  contact: props.userInfo ? props.userInfo.contact : "",
-  facebook_link: props.userInfo ? props.userInfo.facebook_link : "",
-});
-
-// const submit = () => {
-//   form.put(route("user.update", props.user.id),{
-//     onSuccess: () => alert('Sumitted!'),
-//     onError: (errors) => console.error('An error occured while updatings profile => ' , errors)
-//   });
-// };
-
-const submit = () => {
-  const data = new FormData();
-  data.append("profile_pic", form.profile_pic);
-  data.append("address", form.address);
-  data.append("bio", form.bio);
-  data.append("contact", form.contact);
-  data.append("facebook_link", form.social_links);
-
-  console.log([...data.entries()]);
-  form.put(route("user.update", props.user.id), {
-    data,
-    onSuccess: () => alert("Submitted!"),
-    onError: (errors) => console.error("An error occurred while updating profile:", errors),
-  });
-};
-
-
-const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    form.profile_pic = file;
-};
-
-console.log("user => ", props.user);
-console.log("userInfo => ", props.userInfo);
-
-</script>
   
   <style scoped>
 .form input , .form textarea{
