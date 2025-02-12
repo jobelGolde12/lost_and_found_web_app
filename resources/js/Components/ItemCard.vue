@@ -8,14 +8,10 @@ const props = defineProps({
     type: Array,
     default: [],
   },
-  ownerData: {
-    type: Object,
-    default: ({}),
-  },
 });
 let viewLater = ref(false);
 const itemContainer = computed(() => props.items);
-console.log('ownerData => ' + JSON.stringify(props.ownerData) || 'No data')
+console.log('items => ' + JSON.stringify(props.items) || 'No data')
 </script>
 
 <template>
@@ -36,7 +32,7 @@ console.log('ownerData => ' + JSON.stringify(props.ownerData) || 'No data')
         </div>
       </Link>
         <div class="card-body">
-          <h5 class="card-title text-dark">{{ data.item_name }}</h5>
+          <h5 class="card-title text-dark mb-0">{{ data.item_name }}</h5>
           <p class="card-text text-muted">{{ data.item_description }}</p>
           <div class="container-fluid d-flex flex-row justify-content-between align-items-center px-0">
             <div class="left">
@@ -45,7 +41,7 @@ console.log('ownerData => ' + JSON.stringify(props.ownerData) || 'No data')
                 class=" ps-0 d-flex flex-row gap-2 align-items-center"
                 >
                   <div><img src="../../images/profile.png" alt="profile" class="default-profile"></div>
-                      <div class="owner_name">Jhone Doe</div>
+                      <div class="owner_name">{{ data.user?.name || 'user' }}</div>
                   </div>
             </div>
 
